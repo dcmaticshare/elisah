@@ -16,7 +16,7 @@ class SwitchComponent extends Component {
 	}
 
 	render() {
-		console.log( this.props.control.params );
+		//console.log( this.props.control.params );
 		return (
 				<div className="kadence-control-field kadence-switch-control">
 					<ToggleControl
