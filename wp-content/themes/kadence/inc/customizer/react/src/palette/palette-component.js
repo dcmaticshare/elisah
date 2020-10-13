@@ -369,7 +369,7 @@ class ColorComponent extends Component {
 						) }
 					</div>
 					{ this.props.control.params.description && (
-						<span className="customize-control-description"><a href="https://docs.kadencewp.com/kadence-theme/docs/how-to-use-the-kadence-color-palette/" target="_blank">{ this.props.control.params.description }</a></span>
+						<span className="customize-control-description"><a href="https://kadence-theme.com/docs/how-to-use-the-kadence-color-palette/" target="_blank">{ this.props.control.params.description }</a></span>
 					) }
 				</div>
 		);
