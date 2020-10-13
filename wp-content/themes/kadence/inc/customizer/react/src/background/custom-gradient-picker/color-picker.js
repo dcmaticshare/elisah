@@ -45,7 +45,7 @@ class KadenceGradientColorPicker extends Component {
 							rgb.type = 'literal';
 							rgb.value = color.hex;
 						}
-						console.log( rgb );
+						//console.log( rgb );
 						let newGradient;
 						if ( this.state.alreadyInsertedPoint ) {
 							newGradient = getGradientWithColorAtPositionChanged(
