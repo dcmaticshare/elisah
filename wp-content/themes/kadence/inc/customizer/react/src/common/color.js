@@ -61,6 +61,7 @@ class ColorControl extends Component {
 				overflow: 'hidden',
 			},
 		};
+		const position = ( this.props.position ? this.props.position : "top right" );
 		const showingGradient = ( this.props.allowGradient && this.state.supportGradient ? true : false );
 		return (
 			<div className="kadence-color-picker-wrap">
@@ -84,7 +85,7 @@ class ColorControl extends Component {
 				{ showingGradient && (
 					<Fragment>
 						{ this.state.isVisible && (
-							<Popover position="top left" className="kadence-popover-color" onClose={ toggleClose }>
+							<Popover position={ position } className="kadence-popover-color" onClose={ toggleClose }>
 								<TabPanel className="kadence-popover-tabs kadence-background-tabs"
 									activeClass="active-tab"
 									initialTabName={ ( this.state.color && this.state.color.includes( 'gradient' ) ? 'gradient' : 'color' ) }
