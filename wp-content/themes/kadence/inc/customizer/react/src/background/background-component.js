@@ -194,9 +194,13 @@ class BackgroundComponent extends Component {
 		this.updateValues( value );
 	}
 	onImageRemove( device ) {
-		this.props.control.params.attachment[device] = {};
+		if ( undefined !== this.props.control.params.attachment && this.props.control.params.attachment && undefined !== this.props.control.params.attachment[device] ) {
+			this.props.control.params.attachment[device] = {};
+		}
 		let value = this.state.value;
-		value[device].image.url = '';
+		if ( value[device] ) {
+			value[device].image.url = '';
+		}
 		this.updateValues( value );
 	}
 	render() {
