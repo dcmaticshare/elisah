@@ -3,8 +3,8 @@ h1, h2, h3, h4, h5, h6 {padding: 0;margin: 0;}
 h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {color: inherit;text-decoration: none;}
 dfn, cite, em, i {font-style: italic;}
 blockquote, q {quotes: "“" "”";}
-blockquote {border-left: 4px solid var(--global-palette4);}
-.entry-content blockquote {padding-left: 1em;margin: var(--global-md-spacing) 0 0;}
+blockquote {padding-left: 1em;border-left: 4px solid var(--global-palette4);}
+.entry-content blockquote {margin: var(--global-md-spacing) 0 0;}
 blockquote cite, blockquote .wp-block-pullquote__citation {color: var(--global-palette5);font-size: 13px;margin-top: 1em;position: relative;font-style: normal;display: block;}
 address {margin: 0 0 1.5em;}
 pre {background: var(--global-palette7);font-family: "Courier 10 Pitch",Courier,monospace;font-size: .9375rem;line-height: 1.6;max-width: 100%;overflow: auto;padding: 1.5em;white-space: pre-wrap;}
@@ -44,8 +44,6 @@ embed, iframe, object {max-width: 100%;}
 .wp-caption img[class*="wp-image-"] {display: block;margin-left: auto;margin-right: auto;}
 .wp-caption-text {text-align: center;}
 .wp-caption .wp-caption-text {margin: .8075em 0;}
-@media (768px) {.wp-caption.alignright, .wp-block-image.alignright {}
-	.wp-caption.alignleft, .wp-block-image.alignleft {}}
 .gallery {margin-bottom: 1.5em;display: grid;grid-template-columns: repeat(auto-fill,minmax(150px,1fr));grid-gap: .5em;}
 .gallery .gallery-item {margin-top: 0;}
 .elementor-image-gallery .gallery {display: block;}
@@ -183,7 +181,7 @@ address, figure, hr, p, table, pre {margin-top: 0;margin-bottom: 0;}
 p {margin-bottom: var(--global-md-spacing);}
 pre {margin-bottom: var(--global-md-spacing);}
 hr {margin-top: var(--global-md-spacing);margin-bottom: 0;}
-ul, ol {margin: var(--global-md-spacing) 0 0;padding-left: 2em;}
+ul, ol {margin: 0 0 var(--global-md-spacing);padding-left: 2em;}
 li>ol, li>ul {margin: 0;}
 .alignleft {float: left;margin-right: var(--global-md-spacing);}
 .alignright {float: right;margin-left: var(--global-md-spacing);}
