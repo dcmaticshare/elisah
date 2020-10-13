@@ -30,7 +30,7 @@ export function serializeGradientOrientation( orientation ) {
 
 export function serializeGradient( { type, orientation, colorStops } ) {
 	const serializedOrientation = serializeGradientOrientation( orientation );
-	console.log( colorStops );
+	//console.log( colorStops );
 	const serializedColorStops = colorStops
 		.sort( ( colorStop1, colorStop2 ) => {
 			return (
