@@ -130,26 +130,26 @@ if ( window.NodeList && ! NodeList.prototype.forEach ) {
 				// If no dropdown, create one.
 				if ( dropdown ) {
 					// Toggle the submenu when we click the dropdown button.
-					dropdown.addEventListener( 'click', ( e ) => {
+					dropdown.addEventListener( 'click', function( e ) {
 						e.preventDefault();
 						window.kadence.toggleSubMenu( e.target.parentNode.parentNode.parentNode.parentNode );
 					} );
 					// Add tabindex.
 					dropdown.tabIndex = 0;
 					// Toggle the submenu when we press enter on the dropdown button.
-					dropdown.addEventListener( 'keypress', ( e ) => {
+					dropdown.addEventListener( 'keypress', function( e ) {
 						if ( e.key === 'Enter' ) {
 							window.kadence.toggleSubMenu( e.target.parentNode.parentNode.parentNode );
 						}
 					} );
 		
 					// Clean up the toggle if a mouse takes over from keyboard.
-					parentMenuItem.addEventListener( 'mouseleave', ( e ) => {
+					parentMenuItem.addEventListener( 'mouseleave', function( e ) {
 						window.kadence.toggleSubMenu( e.target, false );
 					} );
 		
 					// When we focus on a menu link, make sure all siblings are closed.
-					parentMenuItem.querySelector( 'a' ).addEventListener( 'focus', ( e ) => {
+					parentMenuItem.querySelector( 'a' ).addEventListener( 'focus', function( e ) {
 						var parentMenuItemsToggled = e.target.parentNode.parentNode.querySelectorAll( 'li.menu-item--toggled-on' );
 						for ( let j = 0; j < parentMenuItemsToggled.length; j++ ) {
 							window.kadence.toggleSubMenu( parentMenuItemsToggled[ j ], false );
@@ -157,20 +157,20 @@ if ( window.NodeList && ! NodeList.prototype.forEach ) {
 					} );
 		
 					// Handle keyboard accessibility for traversing menu.
-					SUBMENUS[ i ].addEventListener( 'keydown', ( e ) => {
+					SUBMENUS[ i ].addEventListener( 'keydown', function( e ) {
 						// These specific selectors help us only select items that are visible.
-						var focusSelector = 'ul.toggle-show > li > a, ul.toggle-show > li > a .dropdown';
+						var focusSelector = 'ul.toggle-show > li > a, ul.toggle-show > li > a .dropdown-nav-toggle';
 		
 						// 9 is tab KeyMap
 						if ( 9 === e.keyCode ) {
 							if ( e.shiftKey ) {
 								// Means we're tabbing out of the beginning of the submenu.
-								if ( window.kadence.isfirstFocusableElement( e.target, document.activeElement, focusSelector ) ) {
-									window.kadence.toggleSubMenu( e.target.parentNode.parentNode.parentNode, false );
+								if ( window.kadence.isfirstFocusableElement (SUBMENUS[ i ], document.activeElement, focusSelector ) ) {
+									window.kadence.toggleSubMenu( SUBMENUS[ i ].parentNode, false );
 								}
 								// Means we're tabbing out of the end of the submenu.
-							} else if ( window.kadence.islastFocusableElement( e.target, document.activeElement, focusSelector ) ) {
-								window.kadence.toggleSubMenu( e.target.parentNode.parentNode.parentNode, false );
+							} else if ( window.kadence.islastFocusableElement( SUBMENUS[ i ], document.activeElement, focusSelector ) ) {
+								window.kadence.toggleSubMenu( SUBMENUS[ i ].parentNode, false );
 							}
 						}
 					} );
@@ -252,6 +252,7 @@ if ( window.NodeList && ! NodeList.prototype.forEach ) {
 		 */
 		islastFocusableElement: function( container, element, focusSelector ) {
 			var focusableElements = container.querySelectorAll( focusSelector );
+			console.log( focusableElements );
 			if ( 0 < focusableElements.length ) {
 				return element === focusableElements[ focusableElements.length - 1 ];
 			}
@@ -260,9 +261,10 @@ if ( window.NodeList && ! NodeList.prototype.forEach ) {
 		/**
 		 * Initiate the script to process all drawer toggles.
 		 */
-		toggleDrawer: function( element, changeFocus = true ) {
+		toggleDrawer: function( element, changeFocus ) {
+			changeFocus = (typeof changeFocus !== 'undefined') ?  changeFocus : true;
 			var toggle = element;
-			var target = document.querySelector(toggle.dataset.toggleTarget);
+			var target = document.querySelector( toggle.dataset.toggleTarget );
 			var _doc   = document;
 			var duration = ( toggle.dataset.toggleDuration ? toggle.dataset.toggleDuration : 250 );
 			window.kadence.toggleAttribute( toggle, 'aria-expanded', 'true', 'false' );
@@ -273,16 +275,16 @@ if ( window.NodeList && ! NodeList.prototype.forEach ) {
 				// Hide the drawer.
 				target.classList.remove('active');
 				setTimeout(function () {
-				target.classList.remove('show-drawer');
-				if ( toggle.dataset.setFocus && changeFocus ) {
-					var focusElement = document.querySelector(toggle.dataset.setFocus);
-					if ( focusElement ) {
-						focusElement.focus();
-						if ( focusElement.hasAttribute( 'aria-expanded') ) {
-							window.kadence.toggleAttribute( focusElement, 'aria-expanded', 'true', 'false' );
+					target.classList.remove('show-drawer');
+					if ( toggle.dataset.setFocus && changeFocus ) {
+						var focusElement = document.querySelector(toggle.dataset.setFocus);
+						if ( focusElement ) {
+							focusElement.focus();
+							if ( focusElement.hasAttribute( 'aria-expanded') ) {
+								window.kadence.toggleAttribute( focusElement, 'aria-expanded', 'true', 'false' );
+							}
 						}
 					}
-				}
 				}, duration);
 			} else {
 				// Show the drawer.
@@ -292,21 +294,49 @@ if ( window.NodeList && ! NodeList.prototype.forEach ) {
 					_doc.body.classList.toggle( toggle.dataset.toggleBodyClass );
 				}
 				setTimeout(function () {
-				target.classList.add('active');
-				if ( toggle.dataset.setFocus, changeFocus ) {
-					var focusElement = document.querySelector(toggle.dataset.setFocus);
+					target.classList.add('active');
+					if ( toggle.dataset.setFocus, changeFocus ) {
+						var focusElement = document.querySelector(toggle.dataset.setFocus);
 
-					if ( focusElement ) {
-						if ( focusElement.hasAttribute( 'aria-expanded') ) {
-							window.kadence.toggleAttribute( focusElement, 'aria-expanded', 'true', 'false' );
+						if ( focusElement ) {
+							if ( focusElement.hasAttribute( 'aria-expanded') ) {
+								window.kadence.toggleAttribute( focusElement, 'aria-expanded', 'true', 'false' );
+							}
+							var searchTerm = focusElement.value;
+							focusElement.value = '';
+							focusElement.focus();
+							focusElement.value = searchTerm;
 						}
-						var searchTerm = focusElement.value;
-						focusElement.value = '';
-						focusElement.focus();
-						focusElement.value = searchTerm;
 					}
-				}
 				}, 10);
+				// Keep Focus in Modal
+				if ( target.classList.contains('popup-drawer') ) {
+					// add all the elements inside modal which you want to make focusable
+					var focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+					var focusableContent = target.querySelectorAll( focusableElements );
+					var firstFocusableElement = focusableContent[0]; // get first element to be focused inside modal
+					var lastFocusableElement = focusableContent[ focusableContent.length - 1 ]; // get last element to be focused inside modal
+
+					document.addEventListener( 'keydown', function(e) {
+						let isTabPressed = e.key === 'Tab' || e.keyCode === 9;
+
+						if ( ! isTabPressed ) {
+							return;
+						}
+
+						if ( e.shiftKey ) { // if shift key pressed for shift + tab combination
+							if ( document.activeElement === firstFocusableElement ) {
+								lastFocusableElement.focus(); // add focus for the last focusable element
+								e.preventDefault();
+							}
+						} else { // if tab key is pressed
+							if ( document.activeElement === lastFocusableElement ) { // if focused has reached to last focusable element then focus first focusable element after pressing tab
+								firstFocusableElement.focus(); // add focus for the first focusable element
+								e.preventDefault();
+							}
+						}
+					});
+				}
 			}
 		},
 		/**
@@ -320,7 +350,6 @@ if ( window.NodeList && ! NodeList.prototype.forEach ) {
 			if ( ! drawerTOGGLE.length ) {
 				return;
 			}
-		
 			for ( let i = 0; i < drawerTOGGLE.length; i++ ) {
 				drawerTOGGLE[ i ].addEventListener('click', function( event ) {
 					event.preventDefault();
@@ -337,14 +366,14 @@ if ( window.NodeList && ! NodeList.prototype.forEach ) {
 					} );
 				}
 			  });
-			  // Close modal on outside click.
-			  document.addEventListener('click', function (event) {
+			// Close modal on outside click.
+			document.addEventListener( 'click', function (event) {
 				var target = event.target;
 				var modal = document.querySelector( '.show-drawer.active .drawer-overlay' );
 				if ( target === modal ) {
 					window.kadence.toggleDrawer(document.querySelector('*[data-toggle-target="' + modal.dataset.drawerTargetString + '"]'));
 				}
-			  });
+			} );
 		},
 		/**
 		 * Initiate the script to process all
@@ -442,6 +471,8 @@ if ( window.NodeList && ! NodeList.prototype.forEach ) {
 			var desktopSticky = document.querySelector( '#main-header .kadence-sticky-header' ),
 				mobileSticky  = document.querySelector( '#mobile-header .kadence-sticky-header' ),
 				wrapper = document.getElementById( 'wrapper' ),
+				proSticky = document.querySelectorAll( '.kadence-pro-fixed-above' ),
+				proElements = document.querySelectorAll( '.kadence-before-wrapper-item' ),
 				activeSize = 'mobile',
 				activeOffsetTop = 0;
 				if ( kadenceConfig.breakPoints.desktop <= window.innerWidth ) {
@@ -464,6 +495,20 @@ if ( window.NodeList && ! NodeList.prototype.forEach ) {
 					if ( document.body.classList.toString().includes( 'boom_bar-static-top' ) ) {
 						var boomBar = document.querySelector( '.boom_bar' );
 						offsetTop = window.kadence.getOffset( wrapper ).top - boomBar.offsetHeight;
+					}
+					if ( proElements.length ) {
+						var proElementOffset = 0;
+						for ( let i = 0; i < proElements.length; i++ ) {
+							proElementOffset = proElementOffset + proElements[ i ].offsetHeight;
+						}
+						offsetTop = window.kadence.getOffset( wrapper ).top - proElementOffset;
+					}
+					if ( proSticky.length ) {
+						var proOffset = 0;
+						for ( let i = 0; i < proSticky.length; i++ ) {
+							proOffset = proOffset + proSticky[ i ].offsetHeight;
+						}
+						offsetTop = window.kadence.getOffset( wrapper ).top + proOffset;
 					}
 					if ( kadenceConfig.breakPoints.desktop <= window.innerWidth ) {
 						activeHeader = desktopSticky;
@@ -569,7 +614,7 @@ if ( window.NodeList && ! NodeList.prototype.forEach ) {
 					updateSticky();
 				}
 		},
-		scrollToElement( element, history = true ) {
+		getTopOffset: function() {
 			var desktopSticky = document.querySelector( '#main-header .kadence-sticky-header' ),
 				mobileSticky  = document.querySelector( '#mobile-header .kadence-sticky-header' ),
 				activeScrollSize = 'mobile',
@@ -578,8 +623,8 @@ if ( window.NodeList && ! NodeList.prototype.forEach ) {
 			if ( kadenceConfig.breakPoints.desktop <= window.innerWidth ) {
 				if ( activeScrollSize === 'mobile' ) {
 					if ( desktopSticky ) {
-						var shrink =  desktopSticky.getAttribute( 'data-shrink' );
-						if ( 'true' === shrink ) {
+						var shrink = desktopSticky.getAttribute( 'data-shrink' );
+						if ( 'true' === shrink && ! desktopSticky.classList.contains( 'site-header-inner-wrap' ) ) {
 							activeScrollOffsetTop = Math.floor( desktopSticky.getAttribute( 'data-shrink-height' ) );
 						} else {
 							activeScrollOffsetTop = Math.floor( desktopSticky.offsetHeight );
@@ -608,7 +653,11 @@ if ( window.NodeList && ! NodeList.prototype.forEach ) {
 					activeScrollSize = 'mobile';
 				}
 			}
-			var offsetSticky = Math.floor( activeScrollOffsetTop + activeScrollAdminOffsetTop );
+			return Math.floor( activeScrollOffsetTop + activeScrollAdminOffsetTop );
+		},
+		scrollToElement: function( element, history ) {
+			history = (typeof history !== 'undefined') ?  history : true;
+			var offsetSticky = window.kadence.getTopOffset();
 			var originalTop = Math.floor( element.getBoundingClientRect().top ) - offsetSticky;
 			window.scrollBy( { top: originalTop, left: 0, behavior: 'smooth' } );
 			var checkIfDone = setInterval( function() {
@@ -623,35 +672,47 @@ if ( window.NodeList && ! NodeList.prototype.forEach ) {
 				}
 			}, 100 );
 		},
-		anchorScrollToCheck: function( e, respond = null ) {
-			if ( ! e.currentTarget ) {
-				return;
-			}
-			if ( e.target.closest('a') !== e.currentTarget ) {
-				return;
-			}
-			if ( location.href.replace(/^\//,'') == e.target.closest('a').getAttribute('href').replace(/^\//,'') || location.hostname == e.target.hostname ) {
-				e.preventDefault();
-				var targetID;
-				if ( respond ) {
-					targetID = respond.getAttribute( 'href' ).substring( respond.getAttribute('href').indexOf('#') );
-				} else {
-					if ( e.target.getAttribute('href') ) {
-						targetID = e.target.getAttribute('href').substring( e.target.getAttribute('href').indexOf('#') );
-					} else {
-						var targetLink = e.target.closest('a');
-						if ( targetLink && targetLink.getAttribute('href') ) {
-							targetID = targetLink.getAttribute('href').substring( targetLink.getAttribute('href').indexOf('#') );
-						}
-					}
-				}
-				var targetAnchor = document.getElementById( targetID.replace( '#', '' ) );
-				if ( ! targetAnchor ) {
-					window.location.href = e.target.getAttribute('href');
+		anchorScrollToCheck: function( e, respond ) {
+			respond = (typeof respond !== 'undefined') ?  respond : null;
+			if ( e.target.getAttribute('href') ) {
+				var targetLink = e.target;
+			} else {
+				var targetLink = e.target.closest('a');
+				if ( ! targetLink ) {
 					return;
 				}
-				window.kadence.scrollToElement( targetAnchor );
+				if ( ! targetLink.getAttribute('href') ) {
+					return;
+				}
 			}
+			if ( targetLink.parentNode && targetLink.parentNode.hasAttribute('role') && targetLink.parentNode.getAttribute('role') === 'tab' ) {
+				return;
+			}
+			var targetID;
+			if ( respond ) {
+				targetID = respond.getAttribute( 'href' ).substring( respond.getAttribute('href').indexOf('#') );
+			} else {
+				targetID = targetLink.getAttribute('href').substring( targetLink.getAttribute('href').indexOf('#') );
+			}
+			var targetAnchor = document.getElementById( targetID.replace( '#', '' ) );
+			if ( ! targetAnchor ) {
+				//window.location.href = targetLink.getAttribute('href');
+				return;
+			}
+			e.preventDefault();
+			window.kadence.scrollToElement( targetAnchor );
+		},
+		/**
+		 * Initiate the sticky sidebar.
+		 */
+		initStickySidebar: function() {
+			if ( ! document.body.classList.contains( 'has-sticky-sidebar' ) ) {
+				return;
+			}
+			var offsetSticky = window.kadence.getTopOffset(),
+			sidebar  = document.querySelector( '#secondary .sidebar-inner-wrap' );
+			sidebar.style.top = Math.floor( offsetSticky + 20 ) + 'px';
+			sidebar.style.maxHeight = 'calc( 100vh - ' + Math.floor( offsetSticky + 20 ) + 'px )';
 		},
 		/**
 		 * Initiate the scroll to top.
@@ -674,10 +735,15 @@ if ( window.NodeList && ! NodeList.prototype.forEach ) {
 					}, 100 );
 				}
 			}
-			var foundLinks = document.querySelectorAll( 'a[href*=\\#]:not([href=\\#]):not(.scroll-ignore):not(data-tab):not(data-toggle)' );
-			foundLinks.forEach( each => ( each.onclick = window.kadence.anchorScrollToCheck ) );
-			// var links = document.querySelectorAll( '.scroll' );
-			// links.forEach( each => ( each.onclick = window.kadence.anchorScrollTo ) );
+			var foundLinks = document.querySelectorAll( 'a[href*=\\#]:not([href=\\#]):not(.scroll-ignore):not([data-tab]):not([data-toggle])' );
+			if ( ! foundLinks.length ) {
+				return;
+			}
+			foundLinks.forEach( function( element ) {
+				element.addEventListener( 'click', function( e ) {
+					window.kadence.anchorScrollToCheck( e );
+				} );
+			} );
 		},
 		/**
 		 * Initiate the scroll to top.
@@ -692,10 +758,10 @@ if ( window.NodeList && ! NodeList.prototype.forEach ) {
 						scrollBtn.classList.remove( 'scroll-visible' );;
 					}
 				}
-				window.onscroll = function() { checkScrollVisiblity() };
+				window.addEventListener( 'scroll', checkScrollVisiblity );
 				checkScrollVisiblity();
 				// Toggle the Scroll to top on click.
-				scrollBtn.addEventListener( 'click', ( e ) => {
+				scrollBtn.addEventListener( 'click', function( e ) {
 					e.preventDefault();
 					//window.scrollBy( { top: 0, left: 0, behavior: 'smooth' } );
 					window.scrollTo({top: 0, behavior: 'smooth'});
@@ -717,6 +783,7 @@ if ( window.NodeList && ! NodeList.prototype.forEach ) {
 			window.kadence.initMobileToggleSub();
 			window.kadence.initOutlineToggle();
 			window.kadence.initStickyHeader();
+			window.kadence.initStickySidebar();
 			window.kadence.initTransHeaderPadding();
 			window.kadence.initAnchorScrollTo();
 			window.kadence.initScrollToTop();
