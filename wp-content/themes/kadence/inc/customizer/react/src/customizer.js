@@ -8,7 +8,6 @@
 	 * All handlers need to be inside the 'ready' state.
 	 */
 	wp.customize.bind( 'ready', function() {
-
 		wp.customize.state.create( 'kadenceTab' );
 		wp.customize.state( 'kadenceTab' ).set( 'general' );
 
@@ -270,8 +269,11 @@
 				resizePreviewer();
 			}, 250 );
 		});
-		
-
+		var reloadPreviewer = function() {
+			$( wp.customize.previewer.container ).find( 'iframe' ).css( 'position', 'static' );
+			$( wp.customize.previewer.container ).find( 'iframe' ).css( 'position', 'absolute' );
+		}
+		wp.customize.previewer.bind( 'ready', reloadPreviewer );
 		/**
 		 * Init Header & Footer Builder
 		 */
@@ -296,6 +298,8 @@
 					if ( isExpanded ) {
 						$body.addClass( 'kadence-builder-is-active' );
 						$section.addClass( 'kadence-builder-active' );
+						$section.css('display', 'none').height();
+						$section.css('display', 'block');
 					} else {
 						$body.removeClass( 'kadence-builder-is-active' );
 						$section.removeClass( 'kadence-builder-active' );
@@ -346,6 +350,8 @@
 					if ( isExpanded ) {
 						$body.addClass( 'kadence-footer-builder-is-active' );
 						$section.addClass( 'kadence-footer-builder-active' );
+						$section.css('display', 'none').height();
+						$section.css('display', 'block');
 					} else {
 						$body.removeClass( 'kadence-footer-builder-is-active' );
 						$section.removeClass( 'kadence-footer-builder-active' );
@@ -372,59 +378,6 @@
 
 		};
 		wp.customize.panel( 'kadence_customizer_footer', initFooterBuilderPanel );
-		/**
-		 * Init import export.
-		 */
-		var importExport = {
-			init: function() {
-				$( 'input[name=kadence-theme-export-button]' ).on( 'click', importExport.export );
-				$( 'input[name=kadence-theme-import-button]' ).on( 'click', importExport.import );
-				$( 'input[name=kadence-theme-reset-button]' ).on( 'click', importExport.reset );
-			},
-		
-			export: function() {
-				window.location.href = kadenceCustomizerControlsData.customizerURL + '?kadence-theme-export=' + kadenceCustomizerControlsData.nonce.export;
-			},
-			import: function() {
-				var win			= $( window ),
-					body		= $( 'body' ),
-					form		= $( '<form class="kadence-theme-import-form" method="POST" enctype="multipart/form-data"></form>' ),
-					controls	= $( '.kadence-theme-import-controls' ),
-					file		= $( 'input[name=kadence-theme-import-file]' ),
-					message		= $( '.kadence-theme-uploading' );
-				
-				if ( '' == file.val() ) {
-					alert( kadenceCustomizerControlsData.emptyImport );
-				}
-				else {
-					win.off( 'beforeunload' );
-					body.append( form );
-					form.append( controls );
-					message.show();
-					form.submit();
-				}
-			},
-			reset: function() {
-				var data = {
-					wp_customize: 'on',
-					action: 'kadence_theme_reset',
-					nonce: kadenceCustomizerControlsData.nonce.reset
-				};
-		
-				var r = confirm( kadenceCustomizerControlsData.resetConfirm );
-		
-				if (!r) return;
-		
-				$( 'input[name=kadence-theme-reset-button]' ).attr('disabled', 'disabled');
-		
-				$.post( ajaxurl, data, function () {
-					wp.customize.state('saved').set( true );
-					location.reload();
-				});
-			}
-		};
-		
-		$( importExport.init );
 	});
 
 } )( jQuery, wp );
