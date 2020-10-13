@@ -36,8 +36,8 @@
 .header-navigation ul ul {display: none;position: absolute;top: 100%;flex-direction: column;background: #fff;margin-left: 0;box-shadow: 0 2px 13px rgba(0,0,0,.1);z-index: 1000;}
 .header-navigation ul ul.quadmenu-row {flex-direction: row;}
 .header-navigation ul ul li:last-child {border-bottom: 0;}
-.header-navigation[class*="header-navigation-dropdown-animation-fade"] ul ul {opacity: 0;visibility: hidden;transform: translate3d(0,0,0);transition: all .2s ease;display: block;}
-.header-navigation[class*="header-navigation-dropdown-animation-fade"] li:hover>ul, .header-navigation[class*="header-navigation-dropdown-animation-fade"] li.menu-item--toggled-on>ul, .header-navigation[class*="header-navigation-dropdown-animation-fade"] li:not(.menu-item--has-toggle):focus>ul {opacity: 1;visibility: visible;transform: translate3d(0,0,0);}
+.header-navigation[class*="header-navigation-dropdown-animation-fade"] ul ul {opacity: 0;visibility: hidden;transform: translate3d(0,0,0);transition: all .2s ease;display: block;clip: rect(1px,1px,1px,1px);height: 1px;overflow: hidden;}
+.header-navigation[class*="header-navigation-dropdown-animation-fade"] li:hover>ul, .header-navigation[class*="header-navigation-dropdown-animation-fade"] li.menu-item--toggled-on>ul, .header-navigation[class*="header-navigation-dropdown-animation-fade"] li:not(.menu-item--has-toggle):focus>ul {opacity: 1;visibility: visible;transform: translate3d(0,0,0);clip: auto;height: auto;overflow: visible;}
 .header-navigation.header-navigation-dropdown-animation-fade-up ul ul {transform: translate3d(0,10px,0);}
 .header-navigation.header-navigation-dropdown-animation-fade-down ul ul {transform: translate3d(0,-10px,0);}
 .nav--toggle-sub .dropdown-nav-toggle {display: block;display: inline-flex;background: transparent;position: absolute;right: 0;top: 50%;width: .7em;width: .9em;height: .7em;height: .9em;font-size: inherit;font-size: .9em;line-height: inherit;margin: 0;padding: 0;border: none;border-radius: 0;transform: translateY(-50%);overflow: visible;}
@@ -72,6 +72,7 @@
 .menu-toggle-open .menu-toggle-label:empty {padding-right: 0px;}
 .menu-toggle-open:hover, .menu-toggle-open:focus {border-color: currentColor;background: transparent;box-shadow: none;}
 .menu-toggle-open.menu-toggle-style-default {border: 0;}
+.site .menu-toggle-open {box-shadow: none;}
 .mobile-navigation {width: 100%;}
 .mobile-navigation a {display: block;width: 100%;text-decoration: none;padding: .6em .5em;}
 .mobile-navigation ul {display: block;list-style: none;margin: 0;padding: 0;}
@@ -172,10 +173,11 @@ a.social-button.has-custom-image {width: auto;height: auto;}
 @media screen and (min-width: 1025px) {body.elementor-editor-active.transparent-header #masthead, body.fl-builder-edit.transparent-header #masthead, body.vc_editor.transparent-header #masthead, body.brz-ed.transparent-header #masthead {z-index: 0;}
 	.transparent-header #masthead {position: absolute;left: 0;right: 0;z-index: 100;}
 	.transparent-header #masthead, .transparent-header .site-top-header-wrap .site-header-row-container-inner, .transparent-header .site-main-header-wrap .site-header-row-container-inner, .transparent-header .site-bottom-header-wrap .site-header-row-container-inner {background: transparent;}}
-.site-header-upper-inner-wrap.child-is-fixed .site-header-row-container:not(.item-is-fixed) {align-self: flex-start;flex-grow: 1;}
-.kadence-sticky-header {transition: all .2s ease-in-out;}
+.site-header-upper-inner-wrap.child-is-fixed .site-top-header-wrap:not(.item-is-fixed) {align-self: flex-start;flex-grow: 1;}
+.kadence-sticky-header[data-shrink="true"] {transition: all .2s ease-in-out;}
 .item-is-fixed {position: fixed;left: 0;right: 0;z-index: 1200;}
 .site-branding a.brand img.kadence-sticky-logo {display: none;}
 .kadence-sticky-header.item-is-fixed:not(.item-at-start) .site-branding a.brand.has-sticky-logo img.kadence-sticky-logo {display: block;}
 .kadence-sticky-header.item-is-fixed:not(.item-at-start) .site-branding a.brand.has-sticky-logo img {display: none;}
-.kadence-sticky-header.item-is-fixed:not(.item-at-start) .site-branding a.brand img {width: auto;}
+.kadence-sticky-header.item-is-fixed:not(.item-at-start) .site-branding a.brand img:not(.svg-logo-image) {width: auto;}
+#mobile-drawer {z-index: 99999;}
