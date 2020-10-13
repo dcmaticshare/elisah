@@ -22,8 +22,8 @@ import {
 } from './serializer';
 
 function tinyColorRgbToGradientColorStop( { type, value } ) {
-	console.log( type );
-	console.log( value );
+	//console.log( type );
+	//console.log( value );
 	if ( type === 'literal' ) {
 		return {
 			type: 'literal',
