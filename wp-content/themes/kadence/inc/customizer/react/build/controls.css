@@ -19,7 +19,7 @@
 .kadence-build-tabs .nav-tab:hover {box-shadow: none !important;}
 .kadence-build-tabs .nav-tab:not(:first-child) {margin-left: 8px;}
 .kadence-build-tabs .nav-tab.nav-tab-active {border-bottom-color: #007cba;background: #f9f9f9;color: #000;}
-#customize-theme-controls #sub-accordion-section-kadence_customizer_header_builder, #customize-theme-controls #sub-accordion-section-kadence_customizer_footer_builder {position: fixed !important;top: auto;left: 300px;right: 0;background: #eee;border-top: 1px solid #a0aec0;bottom: 0;visibility: visible;height: auto;width: auto;padding: 0;max-height: 60%;overflow: auto;transform: translateY(100%);transition: all .2s;backface-visibility: hidden;}
+#customize-theme-controls #sub-accordion-section-kadence_customizer_header_builder, #customize-theme-controls #sub-accordion-section-kadence_customizer_footer_builder {position: fixed !important;top: auto;left: 300px;right: 0;background: #eee;border-top: 1px solid #a0aec0;bottom: 0;visibility: visible;height: auto;width: auto;padding: 0;max-height: 60%;overflow: auto;transform: translateY(100%);transition: transform .1s ease;backface-visibility: hidden;}
 @media (min-width: 1660px) {#customize-theme-controls #sub-accordion-section-kadence_customizer_header_builder, #customize-theme-controls #sub-accordion-section-kadence_customizer_footer_builder {left: 18%;}}
 #customize-theme-controls #sub-accordion-section-kadence_customizer_header_builder.kadence-builder-active, #customize-theme-controls #sub-accordion-section-kadence_customizer_footer_builder.kadence-footer-builder-active {transform: translateY(0%);visibility: visible;overflow: visible;}
 #customize-theme-controls #sub-accordion-section-kadence_customizer_header_builder.kadence-builder-active.kadence-builder-hide, #customize-theme-controls #sub-accordion-section-kadence_customizer_footer_builder.kadence-footer-builder-active.kadence-builder-hide {transform: translateY(100%) !important;overflow: visible;}
@@ -702,7 +702,7 @@ i.fipicon-angle-left:before {content: "";font-family: dashicons;}
 .kadence-typography-control .kadence-font-family-search .components-base-control .components-base-control__field input {padding-right: 40px;}
 .kadence-typography-control .kadence-font-family-search .kadence-clear-search {position: absolute;right: 0;z-index: 100;height: 30px;border: 0 !important;background: transparent !important;box-shadow: none !important;}
 .kadence-typography-control .kadence-typography-tabs .components-tab-panel__tab-content {position: relative;}
-.kadence-typography-control button.components-button.kadence-typography-family-indicate {max-width: 100px;white-space: nowrap;}
+.kadence-typography-control button.components-button.kadence-typography-family-indicate {max-width: 100px;white-space: nowrap;overflow: hidden;}
 .kadence-typography-control .typography-button-wrap>button.components-button {border: 1px solid #e2e4e7;margin-left: 2px;background-color: #fff;}
 .kadence-typography-control .kadence-popover-typography-single-item {position: relative;}
 .kadence-typography-control .kadence-popover-typography-single-item .components-button-group.kadence-font-family-list {max-height: 304px;}
@@ -805,10 +805,11 @@ span.border-icon svg {width: 24px;height: 24px;}
 .components-custom-gradient-picker .components-custom-gradient-picker__gradient-bar {box-sizing: border-box;}
 .kadence-color-picker-wrap .kadence-popover-color .components-popover__content {min-width: 300px;min-height: 320px;max-height: 60vh;}
 .kadence-color-picker-wrap .kadence-popover-tabs .components-tab-panel__tab-content {position: relative;}
-#accordion-section-kadence_customizer_sidebar_design, #accordion-section-kadence_customizer_cart_design, #accordion-section-kadence_customizer_product_layout_design, #accordion-section-kadence_customizer_course_layout_design, #accordion-section-kadence_customizer_lesson_layout_design, #accordion-section-kadence_customizer_course_archive_design, #accordion-section-kadence_customizer_header_popup_design, #accordion-section-kadence_customizer_llms_membership_archive_design, #accordion-section-woocommerce_product_catalog_design, #accordion-section-kadence_customizer_post_archive_design, #accordion-section-kadence_customizer_sfwd_courses_layout_design, #accordion-section-kadence_customizer_post_layout_design, #accordion-section-kadence_customizer_header_transparent_design, #accordion-section-woocommerce_store_notice_design, #accordion-section-kadence_customizer_scroll_up_design, li#accordion-section-kadence_customizer_courses_layout_design, #accordion-section-kadence_customizer_sfwd_groups_layout_design, #accordion-section-kadence_customizer_sfwd_essays_layout_design, #accordion-section-kadence_customizer_search_design {display: none !important;}
+#accordion-section-kadence_customizer_sidebar_design, #accordion-section-kadence_customizer_cart_design, #accordion-section-kadence_customizer_product_layout_design, #accordion-section-kadence_customizer_course_layout_design, #accordion-section-kadence_customizer_lesson_layout_design, #accordion-section-kadence_customizer_course_archive_design, #accordion-section-kadence_customizer_header_popup_design, #accordion-section-kadence_customizer_llms_membership_archive_design, #accordion-section-woocommerce_product_catalog_design, #accordion-section-kadence_customizer_post_archive_design, #accordion-section-kadence_customizer_sfwd_courses_layout_design, #accordion-section-kadence_customizer_post_layout_design, #accordion-section-kadence_customizer_header_transparent_design, #accordion-section-woocommerce_store_notice_design, #accordion-section-kadence_customizer_scroll_up_design, li#accordion-section-kadence_customizer_courses_layout_design, #accordion-section-kadence_customizer_sfwd_groups_layout_design, #accordion-section-kadence_customizer_sfwd_essays_layout_design, #accordion-section-kadence_customizer_search_design, #accordion-section-kadence_customizer_sfwd_lesson_layout_design, #accordion-section-kadence_customizer_sfwd_topic_layout_design, #accordion-section-kadence_customizer_sfwd_grid_layout_design, li.accordion-section.control-section-design-hidden {display: none !important;}
 .kadence-prevent-transition {transition: none !important;}
 .kadence-popover-color .components-circular-option-picker {position: relative;z-index: 10000000;}
 .kadence-popover-color .components-circular-option-picker .components-popover.components-custom-gradient-picker__color-picker-popover {top: -0px !important;left: 30px !important;bottom: auto !important;}
+.kadence-popover-color .components-circular-option-picker .components-popover.components-custom-gradient-picker__color-picker-popover>div {top: 100%;bottom: auto;}
 .kadence-popover-color .components-circular-option-picker .components-popover.components-custom-gradient-picker__color-picker-popover::before, .kadence-popover-color .components-circular-option-picker .components-popover.components-custom-gradient-picker__color-picker-popover::after {display: none;}
 .kadence-tiny-text .kadence-radio-container-control button.components-button.is-tertiary {font-size: 9px;}
 #customize-control-logo_layout .kadence-radio-container-control button.components-button.is-tertiary {font-size: 9px;}
@@ -830,14 +831,22 @@ p.kt-box-shadow-title {text-align: center;margin-bottom: 0;}
 #customize-control-google_subsets .kadence-radio-container-control button.components-button.is-tertiary {margin: 0;font-size: 9px;}
 .kadence-popover-tabs .components-custom-gradient-picker__gradient-bar:not(.has-gradient) {opacity: 1;}
 .components-dropdown__content.components-custom-gradient-picker__color-picker-popover .components-popover__content>div {padding: 0;}
-hr.kt-theme-hr {margin: 20px 0;}
-#customize-control-kadence_theme_import_export .kadence-theme-button {margin-top: 10px;}
-#customize-control-kadence_theme_import_export .kadence-theme-button.components-button.is-destructive {border: 1px solid;}
-#customize-control-kadence_theme_import_export .kadence-theme-import-file {width: 100%;margin: 10px 0;padding: 10px 0;font-size: 13px;}
-#customize-control-kadence_theme_import_export .kadence-theme-uploading {display: none;margin: 10px 0;padding: 10px;font-size: 12px;}
 .kadence-sorter-no-sorting .kadence-sorter-item {background: #fff;border: 0;line-height: 42px;}
 .kadence-sorter-no-sorting .kadence-sorter-item-panel-header {border-bottom: 0;}
 .kadence-sorter-drop:not(.kadence-sorter-no-sorting) .kadence-sorter-item {border-left: 3px solid #007cba;}
 .kadence-sorter-drop:not(.kadence-sorter-no-sorting) .kadence-move-icon {margin-left: -3px;margin-right: 5px;transform: rotate(90deg);cursor: grab;width: 18px;opacity: .7;}
 .kadence-sorter-drop:not(.kadence-sorter-no-sorting) .kadence-sorter-item-panel-header .kadence-sorter-visiblity {border-left: 1px solid #a0aec0;}
 .rtl .kadence-control-field button.components-button.kadence-reset {margin-right: -20px;margin-left: 0;}
+.kadence-color-picker-wrap>span+.color-button-wrap .components-button.kadence-color-icon-indicate {transform: scale(1.15);box-shadow: 0 0 0 1.5px #007cba;box-shadow: 0 0 0 1.5px var(--wp-admin-theme-color);outline: 1px solid transparent;}
+.kadence-color-picker-wrap .components-popover.kadence-popover-color.is-from-left {left: 40px !important;}
+.kadence-color-picker-wrap .components-popover.kadence-popover-color {animation: kadence-animate__appear-animation .1s cubic-bezier(0,0,.2,1) 0s;}
+.kadence-color-picker-wrap .components-popover.kadence-popover-color.is-from-right {left: 40px !important;}
+.kadence-color-picker-wrap .components-popover.kadence-popover-color.is-from-right .components-popover__content {right: auto;}
+.kadence-color-picker-wrap .kadence-popover-color .components-popover__content>div {min-height: 300px;}
+.kadence-background-picker-wrap>span+.background-button-wrap .components-button.kadence-background-icon-indicate {transform: scale(1.15);box-shadow: 0 0 0 1.5px #007cba;box-shadow: 0 0 0 1.5px var(--wp-admin-theme-color);outline: 1px solid transparent;}
+.kadence-background-picker-wrap .components-popover.kadence-popover-color.is-from-left {left: 40px !important;}
+.kadence-background-picker-wrap .components-popover.kadence-popover-color {animation: kadence-animate__appear-animation .1s cubic-bezier(0,0,.2,1) 0s;}
+.kadence-background-picker-wrap .components-popover.kadence-popover-color.is-from-right {left: 40px !important;}
+.kadence-background-picker-wrap .components-popover.kadence-popover-color.is-from-right .components-popover__content {right: auto;}
+@keyframes kadence-animate__appear-animation {0% {opacity: 0;transform: scaleY(0) scaleX(1);}
+	to {opacity: 1;transform: translateY(0) scaleY(1) scaleX(1);}}
